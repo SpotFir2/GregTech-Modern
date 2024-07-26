@@ -43,6 +43,7 @@ public class ClientProxy extends CommonProxy {
         RecipeComponent.registerRecipeViewCreator(new GTRecipeViewCreator());
         CompassManager.INSTANCE.registerUIConfig(GTCEu.MOD_ID, new GTCompassUIConfig());
         CompassManager.INSTANCE.registerAction("multiblock", MultiblockAction::new);
+        CraftingUnitModelProvider.initCraftingUnitModels();
     }
 
     @SubscribeEvent

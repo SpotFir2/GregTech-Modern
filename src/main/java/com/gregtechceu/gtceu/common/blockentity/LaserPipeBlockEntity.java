@@ -165,20 +165,14 @@ public class LaserPipeBlockEntity extends PipeBlockEntity<LaserPipeType, LaserPi
     @Override
     public void setConnection(Direction side, boolean connected, boolean fromNeighbor) {
         if (!getLevel().isClientSide && connected && !fromNeighbor) {
-            int connections = getConnections();
-            // block connection if any side other than the requested side and its opposite side are already connected.
-            connections &= ~(1 << side.ordinal());
-            connections &= ~(1 << side.getOpposite().ordinal());
-            if (connections != 0) return;
+            // never allow more than two connections total
+            if (getNumConnections() >= 2) return;
 
-            // check the same for the targeted pipe
-            BlockEntity tile = getLevel().getBlockEntity(getBlockPos().relative(side));
+            // also check the other pipe
+            BlockEntity tile = getLevel().getBlockEntity(getPipePos().relative(side));
             if (tile instanceof IPipeNode<?, ?> pipeTile &&
                     pipeTile.getPipeType().getClass() == this.getPipeType().getClass()) {
-                connections = pipeTile.getConnections();
-                connections &= ~(1 << side.ordinal());
-                connections &= ~(1 << side.getOpposite().ordinal());
-                if (connections != 0) return;
+                if (pipeTile.getNumConnections() >= 2) return;
             }
         }
         super.setConnection(side, connected, fromNeighbor);

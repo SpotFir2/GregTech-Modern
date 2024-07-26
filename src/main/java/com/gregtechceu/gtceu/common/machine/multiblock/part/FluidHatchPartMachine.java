@@ -9,9 +9,9 @@ import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.CircuitFancyConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineModifyDrops;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
+import com.gregtechceu.gtceu.api.machine.trait.NotifiableCircuitItemStackHandler;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.gregtechceu.gtceu.config.ConfigHolder;
 
 import com.lowdragmc.lowdraglib.gui.widget.*;
@@ -89,13 +89,12 @@ public class FluidHatchPartMachine extends TieredIOPartMachine implements IMachi
     }
 
     public static long getTankCapacity(long initialCapacity, int tier) {
-        return initialCapacity * (1L << Math.min(9, tier));
+        return initialCapacity * (1L << tier);
     }
 
     protected NotifiableItemStackHandler createCircuitItemHandler(Object... args) {
         if (args.length > 0 && args[0] instanceof IO io && io == IO.IN) {
-            return new NotifiableItemStackHandler(this, 1, IO.IN, IO.NONE)
-                    .setFilter(IntCircuitBehaviour::isIntegratedCircuit);
+            return new NotifiableCircuitItemStackHandler(this);
         } else {
             return new NotifiableItemStackHandler(this, 0, IO.NONE);
         }

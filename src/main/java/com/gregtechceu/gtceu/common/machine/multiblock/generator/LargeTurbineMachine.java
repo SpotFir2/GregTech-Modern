@@ -45,10 +45,10 @@ public class LargeTurbineMachine extends WorkableElectricMultiblockMachine imple
     private final int tier;
     private int excessVoltage;
 
-    public LargeTurbineMachine(IMachineBlockEntity holder, int tier) {
+    public LargeTurbineMachine(IMachineBlockEntity holder, int tier, int am) {
         super(holder);
         this.tier = tier;
-        this.BASE_EU_OUTPUT = (int) GTValues.V[tier] * 2;
+        this.BASE_EU_OUTPUT = (int) GTValues.V[tier] * am;
     }
 
     @Nullable

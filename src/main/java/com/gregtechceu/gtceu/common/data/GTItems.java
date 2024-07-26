@@ -2075,7 +2075,7 @@ public class GTItems {
             .lang("Infinite Water Cover")
             .onRegister(compassNode(GTCompassSections.COVERS, GTCompassNodes.COVER))
             .onRegister(attach(new TooltipBehavior(lines -> {
-                lines.add(Component.translatable("gtceu.universal.tooltip.produces_fluid", 16_000 / 20));
+                lines.add(Component.translatable("gtceu.universal.tooltip.produces_fluid", Integer.MAX_VALUE / 20));
             }), new CoverPlaceBehavior(GTCovers.INFINITE_WATER))).register();
 
     public static ItemEntry<ComponentItem> COVER_ENDER_FLUID_LINK = REGISTRATE
@@ -2672,6 +2672,8 @@ public class GTItems {
             .onRegister(compassNode(GTCompassSections.MISC)).register();
 
     public static void init() {
+        AddItemsAndBlocks.init();
+        if (LDLib.isModLoaded("simple_resource_generators") || LDLib.isModLoaded("simple_ore_generator")) return;
         generateMaterialItems();
         generateTools();
     }

@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.pipenet.IMaterialPipeType;
 import com.gregtechceu.gtceu.client.model.PipeModel;
+import com.gregtechceu.gtceu.common.data.GTElements;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -76,6 +77,10 @@ public enum FluidPipeType implements IMaterialPipeType<FluidPipeProperties> {
         if (material.hasProperty(PropertyKey.WOOD)) {
             return new PipeModel(thickness, () -> GTCEu.id("block/pipe/pipe_side_wood"),
                     () -> GTCEu.id("block/pipe/pipe_%s_in_wood".formatted(name)), null, null);
+        }
+        if (material.getElement() == GTElements.get("spacetime")) {
+            return new PipeModel(thickness, () -> GTCEu.id("block/material_sets/spacetime/pipe_side"),
+                    () -> GTCEu.id("block/material_sets/spacetime/pipe_%s_in".formatted(name)), null, null);
         }
         return new PipeModel(thickness, () -> GTCEu.id("block/pipe/pipe_side"),
                 () -> GTCEu.id("block/pipe/pipe_%s_in".formatted(name)),

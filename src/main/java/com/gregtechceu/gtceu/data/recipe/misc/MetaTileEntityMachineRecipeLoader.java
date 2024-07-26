@@ -393,6 +393,27 @@ public class MetaTileEntityMachineRecipeLoader {
 
         // 4A Energy Hatches
 
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_4a_lv")
+                .inputItems(ENERGY_INPUT_HATCH[LV])
+                .inputItems(wireGtQuadruple, Tin, 2)
+                .inputItems(plate, Steel, 2)
+                .outputItems(ENERGY_INPUT_HATCH_4A[LV])
+                .duration(100).EUt(VA[ULV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_4a_mv")
+                .inputItems(ENERGY_INPUT_HATCH[MV])
+                .inputItems(wireGtQuadruple, Copper, 2)
+                .inputItems(plate, Aluminium, 2)
+                .outputItems(ENERGY_INPUT_HATCH_4A[MV])
+                .duration(100).EUt(VA[LV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_4a_hv")
+                .inputItems(ENERGY_INPUT_HATCH[HV])
+                .inputItems(wireGtQuadruple, Gold, 2)
+                .inputItems(plate, StainlessSteel, 2)
+                .outputItems(ENERGY_INPUT_HATCH_4A[HV])
+                .duration(100).EUt(VA[MV]).save(provider);
+
         ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_4a_ev")
                 .inputItems(ENERGY_INPUT_HATCH[EV])
                 .inputItems(wireGtQuadruple, Aluminium, 2)
@@ -436,6 +457,30 @@ public class MetaTileEntityMachineRecipeLoader {
                 .duration(100).EUt(VA[UV]).save(provider);
 
         // 16A Energy Hatches
+
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_16a_lv")
+                .inputItems(TRANSFORMER[MV])
+                .inputItems(ENERGY_INPUT_HATCH_4A[LV])
+                .inputItems(wireGtOctal, Copper, 2)
+                .inputItems(plate, Aluminium, 4)
+                .outputItems(ENERGY_INPUT_HATCH_16A[LV])
+                .duration(200).EUt(VA[LV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_16a_mv")
+                .inputItems(TRANSFORMER[HV])
+                .inputItems(ENERGY_INPUT_HATCH_4A[MV])
+                .inputItems(wireGtOctal, Gold, 2)
+                .inputItems(plate, StainlessSteel, 4)
+                .outputItems(ENERGY_INPUT_HATCH_16A[MV])
+                .duration(200).EUt(VA[MV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_16a_hv")
+                .inputItems(TRANSFORMER[EV])
+                .inputItems(ENERGY_INPUT_HATCH_4A[HV])
+                .inputItems(wireGtOctal, Aluminium, 2)
+                .inputItems(plate, Titanium, 4)
+                .outputItems(ENERGY_INPUT_HATCH_16A[HV])
+                .duration(200).EUt(VA[HV]).save(provider);
 
         ASSEMBLER_RECIPES.recipeBuilder("energy_hatch_16a_ev")
                 .inputItems(TRANSFORMER[IV])
@@ -521,6 +566,27 @@ public class MetaTileEntityMachineRecipeLoader {
 
         // 4A Dynamo Hatches
 
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_4a_lv")
+                .inputItems(ENERGY_OUTPUT_HATCH[LV])
+                .inputItems(wireGtQuadruple, Tin, 2)
+                .inputItems(plate, Steel, 2)
+                .outputItems(ENERGY_OUTPUT_HATCH_4A[LV])
+                .duration(100).EUt(VA[ULV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_4a_mv")
+                .inputItems(ENERGY_OUTPUT_HATCH[MV])
+                .inputItems(wireGtQuadruple, Copper, 2)
+                .inputItems(plate, Aluminium, 2)
+                .outputItems(ENERGY_OUTPUT_HATCH_4A[MV])
+                .duration(100).EUt(VA[LV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_4a_hv")
+                .inputItems(ENERGY_OUTPUT_HATCH[HV])
+                .inputItems(wireGtQuadruple, Gold, 2)
+                .inputItems(plate, StainlessSteel, 2)
+                .outputItems(ENERGY_OUTPUT_HATCH_4A[HV])
+                .duration(100).EUt(VA[MV]).save(provider);
+
         ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_4a_ev")
                 .inputItems(ENERGY_OUTPUT_HATCH[EV])
                 .inputItems(wireGtQuadruple, Aluminium, 2)
@@ -565,6 +631,30 @@ public class MetaTileEntityMachineRecipeLoader {
                 .duration(100).EUt(VA[UV]).save(provider);
 
         // 16A Dynamo Hatches
+
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_16a_lv")
+                .inputItems(TRANSFORMER[MV])
+                .inputItems(ENERGY_OUTPUT_HATCH_4A[LV])
+                .inputItems(wireGtOctal, Copper, 2)
+                .inputItems(plate, Aluminium, 4)
+                .outputItems(ENERGY_INPUT_HATCH_16A[LV])
+                .duration(200).EUt(VA[LV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_16a_mv")
+                .inputItems(TRANSFORMER[HV])
+                .inputItems(ENERGY_OUTPUT_HATCH_4A[MV])
+                .inputItems(wireGtOctal, Gold, 2)
+                .inputItems(plate, StainlessSteel, 4)
+                .outputItems(ENERGY_OUTPUT_HATCH_16A[MV])
+                .duration(200).EUt(VA[MV]).save(provider);
+
+        ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_16a_hv")
+                .inputItems(TRANSFORMER[EV])
+                .inputItems(ENERGY_OUTPUT_HATCH_4A[HV])
+                .inputItems(wireGtOctal, Aluminium, 2)
+                .inputItems(plate, Titanium, 4)
+                .outputItems(ENERGY_OUTPUT_HATCH_16A[HV])
+                .duration(200).EUt(VA[HV]).save(provider);
 
         ASSEMBLER_RECIPES.recipeBuilder("dynamo_hatch_16a_ev")
                 .inputItems(TRANSFORMER[IV])

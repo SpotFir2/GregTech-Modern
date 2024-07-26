@@ -46,11 +46,16 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -61,13 +66,16 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ChunkWatchEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
@@ -77,6 +85,7 @@ import net.minecraftforge.registries.MissingMappingsEvent;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.latvian.mods.kubejs.item.ItemStackJS;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -387,6 +396,51 @@ public class ForgeCommonEventListener {
                     }
                 }
             });
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPortalSpawnEvent(BlockEvent.PortalSpawnEvent event) {
+        event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity().level().getBlockState(event.getPos()).getBlock() == Blocks.END_PORTAL_FRAME &&
+                event.getEntity().getItemInHand(event.getHand()).getItem() == Items.ENDER_EYE) {
+            if (event.getEntity() instanceof ServerPlayer player &&
+                    player.getOffhandItem().getItem() == ItemStackJS.of("kubejs:end_data").getItem()) {
+                return;
+            }
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onFarmlandTrampleEvent(BlockEvent.FarmlandTrampleEvent event) {
+        event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity() instanceof Player && event.getTarget() instanceof Villager) {
+            event.setCanceled(true);
+            event.setResult(Event.Result.DENY);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEnderTeleportEvent(EntityTeleportEvent.EnderEntity event) {
+        if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
+        if (ConfigHolder.INSTANCE.gameplay.disableDrift && event.phase == TickEvent.Phase.END &&
+                event.side == LogicalSide.CLIENT && event.player.xxa == 0 && event.player.zza == 0) {
+            event.player.setDeltaMovement(event.player.getDeltaMovement().multiply(0.5, 1, 0.5));
         }
     }
 }

@@ -21,6 +21,7 @@ import com.gregtechceu.gtceu.common.recipe.RockBreakerCondition;
 import com.gregtechceu.gtceu.data.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.integration.kjs.GTRegistryInfo;
+import com.gregtechceu.gtceu.utils.GTUtil;
 import com.gregtechceu.gtceu.utils.ResearchManager;
 
 import com.lowdragmc.lowdraglib.gui.widget.SlotWidget;
@@ -216,27 +217,52 @@ public class GTRecipeTypes {
                 if (recipeBuilder.input.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty() &&
                         recipeBuilder.tickInput.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList())
                                 .isEmpty()) {
-                    recipeBuilder
-                            .copy(new ResourceLocation(recipeBuilder.id.toString() + "_water"))
-                            .inputFluids(GTMaterials.Water.getFluid((int) Math.max(4,
-                                    Math.min(1000, recipeBuilder.duration * recipeBuilder.EUt() / 320))))
-                            .duration(recipeBuilder.duration * 2)
-                            .save(provider);
-
-                    recipeBuilder
-                            .copy(new ResourceLocation(recipeBuilder.id.toString() + "_distilled_water"))
-                            .inputFluids(GTMaterials.DistilledWater.getFluid((int) Math.max(3,
-                                    Math.min(750, recipeBuilder.duration * recipeBuilder.EUt() / 426))))
-                            .duration((int) (recipeBuilder.duration * 1.5))
-                            .save(provider);
-
-                    // Don't call buildAndRegister as we are mutating the original recipe and already in the middle of a
-                    // buildAndRegister call.
-                    // Adding a second call will result in duplicate recipe generation attempts
-                    recipeBuilder
-                            .inputFluids(GTMaterials.Lubricant.getFluid((int) Math.max(1,
-                                    Math.min(250, recipeBuilder.duration * recipeBuilder.EUt() / 1280))))
-                            .duration(Math.max(1, recipeBuilder.duration));
+                    if (recipeBuilder.EUt() < 524288) {
+                        recipeBuilder
+                                .copy(new ResourceLocation(recipeBuilder.id.toString() + "_water"))
+                                .inputFluids(GTMaterials.Water.getFluid((int) Math.max(4,
+                                        Math.min(1000, recipeBuilder.duration * recipeBuilder.EUt() / 320))))
+                                .duration(recipeBuilder.duration * 2)
+                                .save(provider);
+                        recipeBuilder
+                                .copy(new ResourceLocation(recipeBuilder.id.toString() + "_distilled_water"))
+                                .inputFluids(GTMaterials.DistilledWater.getFluid((int) Math.max(3,
+                                        Math.min(750, recipeBuilder.duration * recipeBuilder.EUt() / 426))))
+                                .duration((int) (recipeBuilder.duration * 1.5))
+                                .save(provider);
+                        recipeBuilder
+                                .copy(new ResourceLocation(recipeBuilder.id.toString() + "_8_water"))
+                                .inputFluids(GTMaterials.Grade8PurifiedWater.getFluid((int) Math.max(1,
+                                        Math.min(500, recipeBuilder.duration * recipeBuilder.EUt() / 720))))
+                                .duration((int) (recipeBuilder.duration * 0.8))
+                                .save(provider);
+                        recipeBuilder
+                                .copy(new ResourceLocation(recipeBuilder.id.toString() + "_16_water"))
+                                .inputFluids(GTMaterials.Grade16PurifiedWater.getFluid((int) Math.max(1,
+                                        Math.min(250, recipeBuilder.duration * recipeBuilder.EUt() / 960))))
+                                .duration((int) (recipeBuilder.duration * 0.5))
+                                .save(provider);
+                        recipeBuilder
+                                .inputFluids(GTMaterials.Lubricant.getFluid((int) Math.max(1,
+                                        Math.min(250, recipeBuilder.duration * recipeBuilder.EUt() / 1280))))
+                                .duration(Math.max(1, recipeBuilder.duration));
+                    } else if (recipeBuilder.EUt() < GTValues.VA[GTValues.UEV]) {
+                        recipeBuilder
+                                .copy(new ResourceLocation(recipeBuilder.id.toString() + "_16_water"))
+                                .inputFluids(GTMaterials.Grade16PurifiedWater.getFluid((int) Math.max(1,
+                                        Math.min(500, recipeBuilder.duration * recipeBuilder.EUt() / 640))))
+                                .duration((int) (recipeBuilder.duration * 0.5))
+                                .save(provider);
+                        recipeBuilder
+                                .inputFluids(GTMaterials.Grade8PurifiedWater.getFluid((int) Math.max(1,
+                                        Math.min(1000, recipeBuilder.duration * recipeBuilder.EUt() / 320))))
+                                .duration(Math.max(1, recipeBuilder.duration));
+                    } else {
+                        recipeBuilder
+                                .inputFluids(GTMaterials.Grade16PurifiedWater.getFluid((int) Math.max(1,
+                                        Math.min(1000, recipeBuilder.duration * recipeBuilder.EUt() / 320))))
+                                .duration(Math.max(1, recipeBuilder.duration));
+                    }
                 }
             });
 
@@ -384,16 +410,22 @@ public class GTRecipeTypes {
                 if (recipeBuilder.input.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty() &&
                         recipeBuilder.tickInput.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList())
                                 .isEmpty()) {
-                    recipeBuilder.copy(new ResourceLocation(recipeBuilder.id.toString() + "_soldering_alloy"))
-                            .inputFluids(GTMaterials.SolderingAlloy
-                                    .getFluid(Math.max(1, (GTValues.L / 2) * recipeBuilder.getSolderMultiplier())))
-                            .save(provider);
-
-                    // Don't call buildAndRegister as we are mutating the original recipe and already in the middle of a
-                    // buildAndRegister call.
-                    // Adding a second call will result in duplicate recipe generation attempts
-                    recipeBuilder.inputFluids(
-                            GTMaterials.Tin.getFluid(Math.max(1, GTValues.L * recipeBuilder.getSolderMultiplier())));
+                    if (recipeBuilder.EUt() < 160000) {
+                        recipeBuilder.copy(new ResourceLocation(recipeBuilder.id.toString() + "_soldering_alloy"))
+                                .inputFluids(GTMaterials.SolderingAlloy
+                                        .getFluid(Math.max(1, 72 * recipeBuilder.getSolderMultiplier())))
+                                .save(provider);
+                        recipeBuilder.inputFluids(
+                                GTMaterials.Tin.getFluid(Math.max(1, 144 * recipeBuilder.getSolderMultiplier())));
+                    } else {
+                        int am = GTUtil.getFloorTierByVoltage(recipeBuilder.EUt()) - 6;
+                        recipeBuilder.copy(new ResourceLocation(recipeBuilder.id.toString() + "_soldering_alloy"))
+                                .inputFluids(GTMaterials.SuperMutatedLivingSolder
+                                        .getFluid(Math.max(1, 72 * am)))
+                                .save(provider);
+                        recipeBuilder.inputFluids(
+                                GTMaterials.MutatedLivingSolder.getFluid(Math.max(1, 144 * am)));
+                    }
                 }
             });
 
@@ -559,8 +591,7 @@ public class GTRecipeTypes {
                                 .EUt(Math.max(1, EUt / 4)).circuitMeta(i + 1);
 
                         int ratio = RecipeHelper.getRatioForDistillery(input, output, outputItem);
-                        int recipeDuration = (int) (recipeBuilder.duration *
-                                OverclockingLogic.STANDARD_OVERCLOCK_DURATION_DIVISOR);
+                        int recipeDuration = (int) (recipeBuilder.duration * 2);
                         boolean shouldDivide = ratio != 1;
 
                         boolean fluidsDivisible = RecipeHelper.isFluidStackDivisibleForDistillery(input, ratio) &&

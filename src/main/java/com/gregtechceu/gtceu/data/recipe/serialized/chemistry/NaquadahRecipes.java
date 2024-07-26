@@ -49,21 +49,76 @@ public class NaquadahRecipes {
 
         // STARTING POINT
 
-        LARGE_CHEMICAL_RECIPES.recipeBuilder("naquadah_separation").EUt(VA[LuV]).duration(600)
+        LARGE_CHEMICAL_RECIPES.recipeBuilder("naquadah_separation").EUt(VA[LuV]).duration(200)
                 .inputFluids(FluoroantimonicAcid.getFluid(1000))
                 .inputItems(dust, Naquadah, 6)
-                .outputFluids(ImpureEnrichedNaquadahSolution.getFluid(2000))
-                .outputFluids(ImpureNaquadriaSolution.getFluid(2000))
+                .outputFluids(ImpureEnrichedNaquadahSolution.getFluid(4000))
                 .outputItems(dust, TitaniumTrifluoride, 4)
                 .save(provider);
 
         // ENRICHED NAQUADAH PROCESS
 
-        CENTRIFUGE_RECIPES.recipeBuilder("impure_enriched_naquadah_solution_separation").EUt(VA[EV]).duration(400)
-                .inputFluids(ImpureEnrichedNaquadahSolution.getFluid(2000))
-                .outputItems(dust, TriniumSulfide)
-                .outputItems(dust, AntimonyTrifluoride, 2)
+        CHEMICAL_RECIPES.recipeBuilder("hexafluoride_enriched_naquadah_solution")
+                .inputFluids(ImpureEnrichedNaquadahSolution.getFluid(1000))
+                .inputFluids(Fluorine.getFluid(6000))
+                .outputFluids(HexafluorideEnrichedNaquadahSolution.getFluid(1000))
+                .EUt(VA[IV])
+                .duration(150)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("xenon_hexafluoro_enriched_naquadate")
+                .inputFluids(HexafluorideEnrichedNaquadahSolution.getFluid(1000))
+                .inputFluids(Xenon.getFluid(1000))
+                .outputFluids(XenonHexafluoroEnrichedNaquadate.getFluid(1000))
+                .EUt(VA[HV])
+                .duration(200)
+                .save(provider);
+
+        ELECTROLYZER_RECIPES.recipeBuilder("xenoauric_fluoroantimonic_acid")
+                .inputFluids(XenoauricFluoroantimonicAcid.getFluid(1000))
+                .outputItems(dust, Gold)
+                .outputItems(dust, AntimonyTrifluoride)
+                .outputFluids(Xenon.getFluid(1000))
+                .outputFluids(Fluorine.getFluid(3000))
+                .EUt(VA[MV])
+                .duration(800)
+                .save(provider);
+
+        ELECTROLYZER_RECIPES.recipeBuilder("gold_chloride")
+                .inputItems(dust, Gold, 2)
+                .inputFluids(Chlorine.getFluid(6000))
+                .outputFluids(GoldChloride.getFluid(1000))
+                .EUt(VA[MV])
+                .duration(180)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("bromine_trifluoride")
+                .inputFluids(Bromine.getFluid(1000))
+                .inputFluids(Fluorine.getFluid(3000))
+                .outputFluids(BromineTrifluoride.getFluid(1000))
+                .EUt(VA[LV])
+                .duration(120)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("gold_chloride")
+                .inputFluids(GoldChloride.getFluid(1000))
+                .inputFluids(BromineTrifluoride.getFluid(2000))
+                .outputItems(dust, GoldTrifluoride, 8)
+                .outputFluids(Bromine.getFluid(2000))
+                .outputFluids(Chlorine.getFluid(6000))
+                .EUt(VA[MV])
+                .duration(200)
+                .save(provider);
+
+        LARGE_CHEMICAL_RECIPES.recipeBuilder("enriched_naquadah_residue_solution")
+                .inputItems(dust, GoldTrifluoride, 4)
+                .inputFluids(XenonHexafluoroEnrichedNaquadate.getFluid(1000))
+                .inputFluids(FluoroantimonicAcid.getFluid(1000))
+                .inputFluids(Hydrogen.getFluid(9000))
                 .outputFluids(EnrichedNaquadahSolution.getFluid(1000))
+                .outputFluids(XenoauricFluoroantimonicAcid.getFluid(1000))
+                .EUt(VA[LuV])
+                .duration(160)
                 .save(provider);
 
         MIXER_RECIPES.recipeBuilder("enriched_naquadah_solution_separation").EUt(VA[HV]).duration(100)
@@ -96,12 +151,36 @@ public class NaquadahRecipes {
                 .save(provider);
 
         // NAQUADRIA PROCESS
+        LARGE_CHEMICAL_RECIPES.recipeBuilder("enriched_naquadah_separation").EUt(VA[LuV]).duration(400)
+                .inputFluids(FluoroantimonicAcid.getFluid(1000))
+                .inputItems(dust, NaquadahEnriched, 6)
+                .outputFluids(ImpureNaquadriaSolution.getFluid(4000))
+                .outputItems(dust, IndiumPhosphide, 1)
+                .save(provider);
 
-        CENTRIFUGE_RECIPES.recipeBuilder("impure_naquadria_solution_separation").EUt(VA[EV]).duration(400)
-                .inputFluids(ImpureNaquadriaSolution.getFluid(2000))
-                .outputItems(dust, IndiumPhosphide)
-                .outputItems(dust, AntimonyTrifluoride, 2)
+        CHEMICAL_RECIPES.recipeBuilder("hexafluoride_naquadria_solution")
+                .inputFluids(ImpureNaquadriaSolution.getFluid(1000))
+                .inputFluids(Fluorine.getFluid(6000))
+                .outputFluids(HexafluorideNaquadriaSolution.getFluid(1000))
+                .EUt(VA[IV])
+                .duration(400)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("radon_naquadria")
+                .inputFluids(Radon.getFluid(1000))
+                .inputFluids(Fluorine.getFluid(2000))
+                .outputFluids(RadonDifluoride.getFluid(1000))
+                .EUt(VA[MV])
+                .duration(120)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("radon_naquadria_octafluoride")
+                .inputFluids(HexafluorideNaquadriaSolution.getFluid(1000))
+                .inputFluids(RadonDifluoride.getFluid(1000))
+                .outputFluids(RadonNaquadriaOctafluoride.getFluid(1000))
                 .outputFluids(NaquadriaSolution.getFluid(1000))
+                .EUt(VA[HV])
+                .duration(600)
                 .save(provider);
 
         MIXER_RECIPES.recipeBuilder("naquadria_solution_separation").EUt(VA[HV]).duration(100)
@@ -114,7 +193,67 @@ public class NaquadahRecipes {
                 .inputFluids(AcidicNaquadriaSolution.getFluid(3000))
                 .outputFluids(NaquadriaWaste.getFluid(2000))
                 .outputFluids(Fluorine.getFluid(500))
-                .outputItems(dust, NaquadriaSulfate, 6)
+                .outputItems(dustTiny, NaquadriaSulfate, 2)
+                .chancedOutput(dustTiny, NaquadriaSulfate, 2, 6000, 0)
+                .chancedOutput(dustTiny, NaquadriaSulfate, 2, 4000, 0)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("xenon_trioxide")
+                .inputFluids(Xenon.getFluid(1000))
+                .inputFluids(Oxygen.getFluid(3000))
+                .outputFluids(XenonTrioxide.getFluid(1000))
+                .EUt(VA[HV])
+                .duration(200)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("caesium_fluoride")
+                .inputItems(dust, Caesium)
+                .inputFluids(Fluorine.getFluid(1000))
+                .outputFluids(CaesiumFluoride.getFluid(1000))
+                .EUt(7)
+                .duration(60)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("caesium_xenontrioxide_fluoride")
+                .inputFluids(CaesiumFluoride.getFluid(1000))
+                .inputFluids(XenonTrioxide.getFluid(1000))
+                .outputFluids(CaesiumXenontrioxideFluoride.getFluid(1000))
+                .EUt(VA[MV])
+                .duration(400)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("naquadria_caesium_xenonnonfluoride")
+                .inputFluids(RadonNaquadriaOctafluoride.getFluid(1000))
+                .inputFluids(CaesiumXenontrioxideFluoride.getFluid(1000))
+                .outputFluids(NaquadriaCaesiumXenonnonfluoride.getFluid(1000))
+                .outputFluids(RadonTrioxide.getFluid(1000))
+                .EUt(VA[IV])
+                .duration(400)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("nitryl_fluoride")
+                .inputFluids(NitrogenDioxide.getFluid(1000))
+                .inputFluids(Fluorine.getFluid(1000))
+                .outputFluids(NitrylFluoride.getFluid(1000))
+                .EUt(VA[LV])
+                .duration(160)
+                .save(provider);
+
+        CHEMICAL_RECIPES.recipeBuilder("nitrosonium_octafluoroxenate")
+                .inputFluids(NaquadriaCaesiumXenonnonfluoride.getFluid(1000))
+                .inputFluids(NitrylFluoride.getFluid(2000))
+                .outputFluids(NaquadriaCaesiumfluoride.getFluid(1000))
+                .outputFluids(NitrosoniumOctafluoroxenate.getFluid(1000))
+                .EUt(VA[EV])
+                .duration(400)
+                .save(provider);
+
+        MIXER_RECIPES.recipeBuilder("acidic_naquadria_caesiumfluoride")
+                .inputFluids(SulfuricAcid.getFluid(2000))
+                .inputFluids(NaquadriaCaesiumfluoride.getFluid(1000))
+                .outputFluids(AcidicNaquadriaCaesiumfluoride.getFluid(3000))
+                .EUt(VA[IV])
+                .duration(200)
                 .save(provider);
 
         BLAST_RECIPES.recipeBuilder("naquadria_sulfate_separation").EUt(VA[ZPM]).duration(600).blastFurnaceTemp(9000)

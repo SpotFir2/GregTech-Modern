@@ -15,6 +15,8 @@
     "LevelRendererMixin",
     "ModelManagerMixin",
     "MultiPlayerGameModeMixin",
+    "ae2.client.ModelBakeryMixin",
+    "ae2.client.BuiltInModelHooksAccessor",
     "rei.FluidEntryRendererMixin"
   ],
   "mixins": [
@@ -52,6 +54,9 @@
     "TagLoaderMixin",
     "TagManagerMixin",
     "TagValueAccessor",
+    "ae2.MixinCowMap",
+    "ae2.MixinGenericSlotCapacities",
+    "ae2.MixinGenericStackInv",
     "ae2.GenericStackInvAccessor",
     "create.RotationPropagatorMixin",
     "embeddium.BiomeColorCacheMixin",

@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
+import static com.gregtechceu.gtceu.common.data.GCyMRecipeTypes.ELECTRIC_IMPLOSION_COMPRESSOR_RECIPES;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.*;
 
@@ -109,6 +110,11 @@ public class MaterialRecipeHandler {
                         .outputItems(GTUtil.copyAmount(3, gemStack))
                         .chancedOutput(dust, GTMaterials.DarkAsh, 2500, 0)
                         .explosivesType(new ItemStack(GTBlocks.INDUSTRIAL_TNT))
+                        .save(provider);
+
+                ELECTRIC_IMPLOSION_COMPRESSOR_RECIPES.recipeBuilder("electric_implode_" + id)
+                        .inputItems(GTUtil.copyAmount(4, dustStack))
+                        .outputItems(GTUtil.copyAmount(3, gemStack))
                         .save(provider);
             }
 

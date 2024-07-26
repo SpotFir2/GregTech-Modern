@@ -6,7 +6,6 @@ import com.gregtechceu.gtceu.api.gui.UITemplate;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
-import com.gregtechceu.gtceu.config.ConfigHolder;
 
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.widget.ImageWidget;
@@ -28,11 +27,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class SteamHatchPartMachine extends FluidHatchPartMachine {
 
-    public static final long INITIAL_TANK_CAPACITY = 64 * FluidHelper.getBucket();
-    public static final boolean IS_STEEL = ConfigHolder.INSTANCE.machines.steelSteamMultiblocks;
+    public final boolean is_steel;
 
-    public SteamHatchPartMachine(IMachineBlockEntity holder, Object... args) {
-        super(holder, 0, IO.IN, SteamHatchPartMachine.INITIAL_TANK_CAPACITY, 1, args);
+    public SteamHatchPartMachine(IMachineBlockEntity holder, int initial_tank_capacity, boolean steel, Object... args) {
+        super(holder, steel ? 0 : 1, IO.IN, initial_tank_capacity * FluidHelper.getBucket(), 1, args);
+        this.is_steel = steel;
     }
 
     @Override
@@ -44,8 +43,8 @@ public class SteamHatchPartMachine extends FluidHatchPartMachine {
     @Override
     public ModularUI createUI(Player entityPlayer) {
         return new ModularUI(176, 166, this, entityPlayer)
-                .background(GuiTextures.BACKGROUND_STEAM.get(IS_STEEL))
-                .widget(new ImageWidget(7, 16, 81, 55, GuiTextures.DISPLAY_STEAM.get(IS_STEEL)))
+                .background(GuiTextures.BACKGROUND_STEAM.get(this.is_steel))
+                .widget(new ImageWidget(7, 16, 81, 55, GuiTextures.DISPLAY_STEAM.get(this.is_steel)))
                 .widget(new LabelWidget(11, 20, "gtceu.gui.fluid_amount"))
                 .widget(new LabelWidget(11, 30, () -> tank.getFluidInTank(0).getAmount() + "").setTextColor(-1)
                         .setDropShadow(true))
@@ -53,6 +52,6 @@ public class SteamHatchPartMachine extends FluidHatchPartMachine {
                 .widget(new TankWidget(tank.getStorages()[0], 90, 35, true, true)
                         .setBackground(GuiTextures.FLUID_SLOT))
                 .widget(UITemplate.bindPlayerInventory(entityPlayer.getInventory(),
-                        GuiTextures.SLOT_STEAM.get(IS_STEEL), 7, 84, true));
+                        GuiTextures.SLOT_STEAM.get(this.is_steel), 7, 84, true));
     }
 }

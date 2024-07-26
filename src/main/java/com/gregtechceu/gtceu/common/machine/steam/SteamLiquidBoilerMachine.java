@@ -73,7 +73,7 @@ public class SteamLiquidBoilerMachine extends SteamBoilerMachine {
 
     @Override
     protected long getBaseSteamOutput() {
-        return (isHighPressure ? 600 : 240);
+        return (isHighPressure ? 4800 : 1920);
     }
 
     @Override

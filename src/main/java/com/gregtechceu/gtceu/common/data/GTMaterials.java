@@ -61,6 +61,7 @@ public class GTMaterials {
 
         // Gregicality Multiblocks
         GCyMMaterials.register();
+        GTLMaterials.register();
 
         /*
          * Register info for cyclical references
@@ -990,4 +991,50 @@ public class GTMaterials {
     public static Material TitaniumCarbide;
     public static Material TitaniumTungstenCarbide;
     public static Material HastelloyC276;
+
+    /**
+     * GTL Materials
+     */
+    public static Material MutatedLivingSolder;
+    public static Material SuperMutatedLivingSolder;
+    public static Material Grade8PurifiedWater;
+    public static Material Grade16PurifiedWater;
+    public static Material PotassiumPyrosulfate;
+    public static Material SodiumSulfate;
+    public static Material RhodiumNitrate;
+    public static Material RoughlyRhodiumMetal;
+    public static Material RhodiumFilterCakeSolution;
+    public static Material RhodiumSaltSolution;
+    public static Material ZincSulfate;
+    public static Material ReprecipitatedRhodium;
+    public static Material SodiumNitrate;
+    public static Material RhodiumSalt;
+    public static Material RhodiumFilterCake;
+    public static Material SodiumRutheniate;
+    public static Material IridiumDioxide;
+    public static Material RutheniumTetroxideLQ;
+    public static Material SodiumFormate;
+    public static Material RhodiumSulfateGas;
+    public static Material AcidicIridium;
+    public static Material PlatinumSlag;
+    public static Material LeachResidue;
+    public static Material RutheniumTetroxideHot;
+    public static Material HexafluorideEnrichedNaquadahSolution;
+    public static Material XenonHexafluoroEnrichedNaquadate;
+    public static Material GoldTrifluoride;
+    public static Material XenoauricFluoroantimonicAcid;
+    public static Material GoldChloride;
+    public static Material BromineTrifluoride;
+    public static Material HexafluorideNaquadriaSolution;
+    public static Material RadonDifluoride;
+    public static Material RadonNaquadriaOctafluoride;
+    public static Material CaesiumFluoride;
+    public static Material XenonTrioxide;
+    public static Material CaesiumXenontrioxideFluoride;
+    public static Material NaquadriaCaesiumXenonnonfluoride;
+    public static Material RadonTrioxide;
+    public static Material NaquadriaCaesiumfluoride;
+    public static Material NitrosoniumOctafluoroxenate;
+    public static Material NitrylFluoride;
+    public static Material AcidicNaquadriaCaesiumfluoride;
 }

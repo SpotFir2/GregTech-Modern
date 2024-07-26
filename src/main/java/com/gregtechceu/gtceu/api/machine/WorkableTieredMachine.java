@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.*;
 import com.gregtechceu.gtceu.api.machine.feature.*;
 import com.gregtechceu.gtceu.api.machine.trait.*;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.gregtechceu.gtceu.utils.GTUtil;
 
 import com.lowdragmc.lowdraglib.syncdata.ISubscription;
@@ -113,7 +114,8 @@ public abstract class WorkableTieredMachine extends TieredEnergyMachine implemen
         long tierVoltage = GTValues.V[getTier()];
         if (isEnergyEmitter()) {
             return NotifiableEnergyContainer.emitterContainer(this,
-                    tierVoltage * 64L, tierVoltage, getMaxInputOutputAmperage());
+                    tierVoltage * (long) Math.max(1, Math.pow(2, 5 - getTier())) * 64,
+                    tierVoltage, getMaxInputOutputAmperage());
         } else {
             return new NotifiableEnergyContainer(this, tierVoltage * 64L, tierVoltage, 2, 0L, 0L) {
 
@@ -129,7 +131,8 @@ public abstract class WorkableTieredMachine extends TieredEnergyMachine implemen
     }
 
     protected NotifiableItemStackHandler createImportItemHandler(Object... args) {
-        return new NotifiableItemStackHandler(this, getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN);
+        return new NotifiableItemStackHandler(this, getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN)
+                .setFilter((itemStack -> !IntCircuitBehaviour.isIntegratedCircuit(itemStack)));
     }
 
     protected NotifiableItemStackHandler createExportItemHandler(Object... args) {

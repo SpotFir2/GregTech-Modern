@@ -18,6 +18,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import dev.latvian.mods.kubejs.item.ItemStackJS;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -80,6 +81,8 @@ public class GTJEIPlugin implements IModPlugin {
         registration.addRecipeCatalyst(GTMachines.STEAM_FURNACE.right().asStack(), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(GTMachines.STEAM_OVEN.asStack(), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(GTMachines.MULTI_SMELTER.asStack(), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(ItemStackJS.of("gtceu:dimensionally_transcendent_steam_oven"),
+                RecipeTypes.SMELTING);
     }
 
     @Override

@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.cover.CoverBehavior;
 import com.gregtechceu.gtceu.api.cover.CoverDefinition;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 
-import com.lowdragmc.lowdraglib.side.fluid.FluidHelper;
 import com.lowdragmc.lowdraglib.side.fluid.FluidStack;
 import com.lowdragmc.lowdraglib.side.fluid.FluidTransferHelper;
 
@@ -54,7 +53,7 @@ public class InfiniteWaterCover extends CoverBehavior {
             var fluidHandler = FluidTransferHelper.getFluidTransfer(coverHolder.getLevel(), coverHolder.getPos(),
                     attachedSide);
             if (fluidHandler != null)
-                fluidHandler.fill(FluidStack.create(Fluids.WATER, 16 * FluidHelper.getBucket()), false);
+                fluidHandler.fill(FluidStack.create(Fluids.WATER, Integer.MAX_VALUE), false);
         }
     }
 }

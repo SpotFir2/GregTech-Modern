@@ -330,6 +330,12 @@ public class MultiblockMachineBuilder extends MachineBuilder<MultiblockMachineDe
     }
 
     @Override
+    public MultiblockMachineBuilder addCallBack(String str,
+                                                BiFunction<IRecipeLogicMachine, @Nullable Object, @Nullable Object> callback) {
+        return (MultiblockMachineBuilder) super.addCallBack(str, callback);
+    }
+
+    @Override
     public MultiblockMachineBuilder afterWorking(Consumer<IRecipeLogicMachine> afterWorking) {
         return (MultiblockMachineBuilder) super.afterWorking(afterWorking);
     }

@@ -151,26 +151,12 @@ public class OverclockingLogic {
     public static LongIntPair heatingCoilOverclockingLogic(long recipeEUt, long maximumVoltage, int recipeDuration,
                                                            int maxOverclocks, int currentTemp, int recipeRequiredTemp) {
         int amountEUDiscount = Math.max(0, (currentTemp - recipeRequiredTemp) / 900);
-        int amountPerfectOC = amountEUDiscount / 2;
-
+        double reductionDuration = Math.max(0.5, (double) recipeRequiredTemp / currentTemp);
         // apply a multiplicative 95% energy multiplier for every 900k over recipe temperature
         recipeEUt *= Math.min(1, Math.pow(0.95, amountEUDiscount));
 
-        // perfect overclock for every 1800k over recipe temperature
-        if (amountPerfectOC > 0) {
-            // use the normal overclock logic to do perfect OCs up to as many times as calculated
-            var overclock = standardOverclockingLogic(recipeEUt, maximumVoltage, recipeDuration, amountPerfectOC,
-                    PERFECT_OVERCLOCK_DURATION_DIVISOR, STANDARD_OVERCLOCK_VOLTAGE_MULTIPLIER);
-
-            // overclock normally as much as possible after perfects are exhausted
-            return standardOverclockingLogic(overclock.leftLong(), maximumVoltage, overclock.rightInt(),
-                    maxOverclocks - amountPerfectOC, STANDARD_OVERCLOCK_DURATION_DIVISOR,
-                    STANDARD_OVERCLOCK_VOLTAGE_MULTIPLIER);
-        }
-
-        // no perfects are performed, do normal overclocking
-        return standardOverclockingLogic(recipeEUt, maximumVoltage, recipeDuration, maxOverclocks,
-                STANDARD_OVERCLOCK_DURATION_DIVISOR, STANDARD_OVERCLOCK_VOLTAGE_MULTIPLIER);
+        return standardOverclockingLogic(recipeEUt, maximumVoltage, (int) (reductionDuration * recipeDuration),
+                maxOverclocks, 4, 4);
     }
 
     /**

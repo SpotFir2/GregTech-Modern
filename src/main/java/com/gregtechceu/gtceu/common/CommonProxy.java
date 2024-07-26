@@ -65,6 +65,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 import net.minecraftforge.registries.RegisterEvent;
 
+import appeng.core.AELog;
 import com.google.common.collect.Multimaps;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
@@ -88,7 +89,6 @@ public class CommonProxy {
         if (Platform.isDevEnv()) {
             ConfigHolder.INSTANCE.machines.doProcessingArray = true;
             ConfigHolder.INSTANCE.recipes.generateLowQualityGems = true;
-            ConfigHolder.INSTANCE.compat.energy.enablePlatformConverters = true;
         }
 
         GTRegistries.init(eventBus);
@@ -225,6 +225,16 @@ public class CommonProxy {
             CraftingHelper.register(SizedIngredient.TYPE, SizedIngredient.SERIALIZER);
             CraftingHelper.register(IntCircuitIngredient.TYPE, IntCircuitIngredient.SERIALIZER);
         });
+
+        event.enqueueWork(this::postRegistrationInitialization).whenComplete((res, err) -> {
+            if (err != null) {
+                AELog.warn(err);
+            }
+        });
+    }
+
+    public void postRegistrationInitialization() {
+        AddItemsAndBlocks.InitUpgrades();
     }
 
     @SubscribeEvent

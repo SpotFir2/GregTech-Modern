@@ -41,7 +41,8 @@ public class DimensionCondition extends RecipeCondition {
 
     @Override
     public Component getTooltips() {
-        return Component.translatable("recipe.condition.dimension.tooltip", dimension);
+        return Component.translatable("recipe.condition.dimension.tooltip",
+                Component.translatable("dimension." + dimension.toString()));
     }
 
     public ResourceLocation getDimension() {

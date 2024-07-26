@@ -1,10 +1,12 @@
 package com.gregtechceu.gtceu.common.data;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.block.ICoilType;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.sound.ExistingSoundEntry;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import com.lowdragmc.lowdraglib.gui.widget.SlotWidget;
@@ -12,6 +14,8 @@ import com.lowdragmc.lowdraglib.utils.CycleItemStackHandler;
 import com.lowdragmc.lowdraglib.utils.LocalizationUtils;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -65,6 +69,15 @@ public class GCyMRecipeTypes {
                         widgetGroup.getSize().width - 25, widgetGroup.getSize().height - 40, false, false));
             })
             .setSound(GTSoundEntries.ARC);
+
+    public final static GTRecipeType ELECTRIC_IMPLOSION_COMPRESSOR_RECIPES = register("electric_implosion_compressor",
+            MULTIBLOCK)
+            .setMaxIOSize(2, 1, 0, 0).setEUIO(IO.IN)
+            .prepareBuilder(recipeBuilder -> recipeBuilder.duration(1).EUt(GTValues.VA[GTValues.UV]))
+            .setSlotOverlay(false, false, true, GuiTextures.IMPLOSION_OVERLAY_1)
+            .setSlotOverlay(false, false, false, GuiTextures.IMPLOSION_OVERLAY_2)
+            .setSlotOverlay(true, false, true, GuiTextures.DUST_OVERLAY)
+            .setSound(new ExistingSoundEntry(SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS));
 
     public static void init() {}
 }

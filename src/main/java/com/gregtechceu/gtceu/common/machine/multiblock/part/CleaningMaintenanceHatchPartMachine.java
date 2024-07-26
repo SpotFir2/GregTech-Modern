@@ -22,37 +22,63 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class CleaningMaintenanceHatchPartMachine extends AutoMaintenanceHatchPartMachine {
 
-    protected static final Set<CleanroomType> CLEANED_TYPES = new ObjectOpenHashSet<>();
+    protected static final Set<CleanroomType> CLEANROOM = new ObjectOpenHashSet<>();
+    protected static final Set<CleanroomType> STERILE_CLEANROOM = new ObjectOpenHashSet<>();
+    protected static final Set<CleanroomType> LAW_CLEANROOM = new ObjectOpenHashSet<>();
 
     static {
-        CLEANED_TYPES.add(CleanroomType.CLEANROOM);
+        CLEANROOM.add(CleanroomType.CLEANROOM);
+        STERILE_CLEANROOM.addAll(CLEANROOM);
+        STERILE_CLEANROOM.add(CleanroomType.STERILE_CLEANROOM);
+        LAW_CLEANROOM.addAll(STERILE_CLEANROOM);
+        LAW_CLEANROOM.add(CleanroomType.LAW_CLEANROOM);
     }
 
     // must come after the static block
-    private static final ICleanroomProvider DUMMY_CLEANROOM = DummyCleanroom.createForTypes(CLEANED_TYPES);
+    public static final ICleanroomProvider DUMMY_CLEANROOM = DummyCleanroom.createForTypes(CLEANROOM);
+    public static final ICleanroomProvider STERILE_DUMMY_CLEANROOM = DummyCleanroom.createForTypes(STERILE_CLEANROOM);
+    public static final ICleanroomProvider LAW_DUMMY_CLEANROOM = DummyCleanroom.createForTypes(LAW_CLEANROOM);
 
-    public CleaningMaintenanceHatchPartMachine(IMachineBlockEntity metaTileEntityId) {
+    ICleanroomProvider cleanroomTypes;
+
+    public CleaningMaintenanceHatchPartMachine(IMachineBlockEntity metaTileEntityId,
+                                               ICleanroomProvider cleanroomTypes) {
         super(metaTileEntityId);
+        this.cleanroomTypes = cleanroomTypes;
+    }
+
+    public static CleaningMaintenanceHatchPartMachine Cleaning(IMachineBlockEntity metaTileEntityId) {
+        return new CleaningMaintenanceHatchPartMachine(metaTileEntityId, DUMMY_CLEANROOM);
+    }
+
+    public static CleaningMaintenanceHatchPartMachine SterileCleaning(IMachineBlockEntity metaTileEntityId) {
+        return new CleaningMaintenanceHatchPartMachine(metaTileEntityId, STERILE_DUMMY_CLEANROOM);
+    }
+
+    public static CleaningMaintenanceHatchPartMachine LawCleaning(IMachineBlockEntity metaTileEntityId) {
+        return new CleaningMaintenanceHatchPartMachine(metaTileEntityId, LAW_DUMMY_CLEANROOM);
     }
 
     @Override
     public void addedToController(IMultiController controller) {
         super.addedToController(controller);
         if (controller instanceof ICleanroomReceiver receiver) {
-            receiver.setCleanroom(DUMMY_CLEANROOM);
+            receiver.setCleanroom(cleanroomTypes);
         }
     }
 
     @Override
     public void removedFromController(IMultiController controller) {
         super.removedFromController(controller);
-        if (controller instanceof ICleanroomReceiver receiver && receiver.getCleanroom() == DUMMY_CLEANROOM) {
+        if (controller instanceof ICleanroomReceiver receiver && receiver.getCleanroom() == cleanroomTypes) {
             receiver.setCleanroom(null);
         }
     }
 
     @Override
     public int getTier() {
+        if (this.cleanroomTypes == STERILE_DUMMY_CLEANROOM) return GTValues.UEV;
+        if (this.cleanroomTypes == LAW_DUMMY_CLEANROOM) return GTValues.UXV;
         return GTValues.UV;
     }
 
@@ -63,14 +89,14 @@ public class CleaningMaintenanceHatchPartMachine extends AutoMaintenanceHatchPar
      */
     @SuppressWarnings("unused")
     public static void addCleanroomType(@NotNull CleanroomType type) {
-        CLEANED_TYPES.add(type);
+        CLEANROOM.add(type);
     }
 
     /**
      * @return the {@link CleanroomType}s this hatch provides to multiblocks
      */
     @SuppressWarnings("unused")
-    public static ImmutableSet<CleanroomType> getCleanroomTypes() {
-        return ImmutableSet.copyOf(CLEANED_TYPES);
+    public static ImmutableSet<CleanroomType> getCleanroomTypes(ICleanroomProvider p) {
+        return ImmutableSet.copyOf(p.getTypes());
     }
 }

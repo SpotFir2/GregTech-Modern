@@ -9,6 +9,8 @@ import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.IBatteryData;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.pattern.error.PatternStringError;
@@ -266,5 +268,33 @@ public class Predicates {
                 }, () -> Arrays.stream(frameMaterials).map(m -> GTBlocks.MATERIAL_BLOCKS.get(TagPrefix.frameGt, m))
                         .filter(Objects::nonNull).filter(RegistryEntry::isPresent).map(RegistryEntry::get)
                         .map(BlockInfo::fromBlock).toArray(BlockInfo[]::new)));
+    }
+
+    public static TraceabilityPredicate RotorBlock() {
+        return new TraceabilityPredicate(
+                new PredicateBlocks(
+                        PartAbility.ROTOR_HOLDER.getAllBlocks().toArray(Block[]::new)) {
+
+                    @Override
+                    public boolean test(MultiblockState blockWorldState) {
+                        if (super.test(blockWorldState)) {
+                            var level = blockWorldState.getWorld();
+                            var pos = blockWorldState.getPos();
+                            var machine = MetaMachine.getMachine(level, pos);
+                            if (machine instanceof ITieredMachine tieredMachine) {
+                                int tier = blockWorldState
+                                        .getMatchContext()
+                                        .getOrPut("ReinforcedRotor", tieredMachine.getTier());
+                                if (tier != tieredMachine.getTier()) {
+                                    return false;
+                                }
+                                return level
+                                        .getBlockState(pos.relative(machine.getFrontFacing()))
+                                        .isAir();
+                            }
+                        }
+                        return false;
+                    }
+                });
     }
 }

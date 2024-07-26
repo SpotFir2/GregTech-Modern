@@ -1051,23 +1051,6 @@ public class MetaTileEntityLoader {
 
         registerMachineRecipe(provider, true, GTMachines.BUFFER, "HP", "CV",
                 'H', HULL, 'P', PUMP, 'V', CONVEYOR, 'C', CustomTags.LV_CIRCUITS);
-
-        VanillaRecipeHelper.addShapedRecipe(provider, true, "cleanroom", GTMachines.CLEANROOM.asStack(), "FFF", "RHR",
-                "MCM", 'F', GTItems.ITEM_FILTER.asStack(), 'R',
-                new UnificationEntry(TagPrefix.rotor, GTMaterials.StainlessSteel), 'H', HULL.getIngredient(HV), 'M',
-                GTItems.ELECTRIC_MOTOR_HV.asStack(), 'C', CustomTags.HV_CIRCUITS);
-
-        if (ConfigHolder.INSTANCE.compat.energy.enablePlatformConverters) {
-            registerMachineRecipe(provider, true, GTMachines.ENERGY_CONVERTER_1A, " WW", "RMC", " WW", 'C', CIRCUIT,
-                    'M', HULL, 'W', CABLE, 'R', new UnificationEntry(TagPrefix.cableGtSingle, GTMaterials.RedAlloy));
-            registerMachineRecipe(provider, true, GTMachines.ENERGY_CONVERTER_4A, " WW", "RMC", " WW", 'C', CIRCUIT,
-                    'M', HULL, 'W', CABLE_QUAD, 'R',
-                    new UnificationEntry(TagPrefix.cableGtQuadruple, GTMaterials.RedAlloy));
-            registerMachineRecipe(provider, true, GTMachines.ENERGY_CONVERTER_8A, " WW", "RMC", " WW", 'C', CIRCUIT,
-                    'M', HULL, 'W', CABLE_OCT, 'R', new UnificationEntry(TagPrefix.cableGtOctal, GTMaterials.RedAlloy));
-            registerMachineRecipe(provider, true, GTMachines.ENERGY_CONVERTER_16A, " WW", "RMC", " WW", 'C', CIRCUIT,
-                    'M', HULL, 'W', CABLE_HEX, 'R', new UnificationEntry(TagPrefix.cableGtHex, GTMaterials.RedAlloy));
-        }
     }
 
     // Can only accept a subset of "Item" types:

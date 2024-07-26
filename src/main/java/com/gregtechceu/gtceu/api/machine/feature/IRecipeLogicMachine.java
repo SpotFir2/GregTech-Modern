@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.config.ConfigHolder;
 
+import dev.latvian.mods.kubejs.util.ConsoleJS;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -108,6 +109,48 @@ public interface IRecipeLogicMachine extends IRecipeCapabilityHolder, IMachineFe
      */
     default void afterWorking() {
         self().getDefinition().getAfterWorking().accept(this);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T> T machineCallback(String str, @Nullable Object value, @Nullable T defaultValue) {
+        var callback = self().getDefinition().getCustomCallback().get(str);
+        Object res;
+        if (callback != null) {
+            try {
+                res = callback.apply(this, value);
+                if (defaultValue == null) {
+                    return null;
+                }
+                if (defaultValue.getClass().isInstance(res)) {
+                    return (T) res;
+                }
+                return (T) convertValue(res, defaultValue.getClass());
+            } catch (Exception e) {
+                ConsoleJS.STARTUP.error(e.getMessage());
+                return defaultValue;
+            }
+
+        }
+        return defaultValue;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T convertValue(Object value, Class<T> targetClass) {
+        if (targetClass.isInstance(value)) {
+            return (T) value;
+        }
+        if (value instanceof Number number) {
+            if (targetClass == int.class || targetClass == Integer.class) {
+                return (T) (Integer) number.intValue();
+            } else if (targetClass == long.class || targetClass == Long.class) {
+                return (T) (Long) number.longValue();
+            } else if (targetClass == float.class || targetClass == Float.class) {
+                return (T) (Float) number.floatValue();
+            } else if (targetClass == double.class || targetClass == Double.class) {
+                return (T) (Double) number.doubleValue();
+            }
+        }
+        throw new ClassCastException("Cannot convert " + value.getClass() + " to " + targetClass);
     }
 
     /**

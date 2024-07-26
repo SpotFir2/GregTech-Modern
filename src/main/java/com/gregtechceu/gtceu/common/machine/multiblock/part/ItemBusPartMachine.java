@@ -10,6 +10,7 @@ import com.gregtechceu.gtceu.api.machine.feature.IMachineModifyDrops;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IDistinctPart;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.ItemHandlerProxyRecipeTrait;
+import com.gregtechceu.gtceu.api.machine.trait.NotifiableCircuitItemStackHandler;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.gregtechceu.gtceu.config.ConfigHolder;
@@ -80,18 +81,22 @@ public class ItemBusPartMachine extends TieredIOPartMachine implements IDistinct
     }
 
     protected int getInventorySize() {
-        int sizeRoot = 1 + Math.min(9, getTier());
+        int sizeRoot = 1 + getTier();
         return sizeRoot * sizeRoot;
     }
 
     protected NotifiableItemStackHandler createInventory(Object... args) {
-        return new NotifiableItemStackHandler(this, getInventorySize(), io);
+        if (io == IO.IN) {
+            return new NotifiableItemStackHandler(this, getInventorySize(), IO.IN)
+                    .setFilter((itemStack -> !IntCircuitBehaviour.isIntegratedCircuit(itemStack)));
+        } else {
+            return new NotifiableItemStackHandler(this, getInventorySize(), IO.OUT);
+        }
     }
 
     protected NotifiableItemStackHandler createCircuitItemHandler(Object... args) {
         if (args.length > 0 && args[0] instanceof IO io && io == IO.IN) {
-            return new NotifiableItemStackHandler(this, 1, IO.IN, IO.NONE)
-                    .setFilter(IntCircuitBehaviour::isIntegratedCircuit);
+            return new NotifiableCircuitItemStackHandler(this);
         } else {
             return new NotifiableItemStackHandler(this, 0, IO.NONE);
         }

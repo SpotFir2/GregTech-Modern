@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.data.worldgen.bedrockfluid.BedrockFluidDefiniti
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.biome.Biomes;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -117,8 +119,211 @@ public class GTBedrockFluids {
             .dimensions(nether())
             .register();
 
+    public static BedrockFluidDefinition HELIUM_3 = BedrockFluidDefinition
+            .builder(GTCEu.id("helium3_deposit"))
+            .fluid(GTMaterials.Helium3::getFluid)
+            .weight(20)
+            .yield(50, 80)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("ad_astra", "moon"))
+            .register();
+
+    public static BedrockFluidDefinition HELIUM = BedrockFluidDefinition
+            .builder(GTCEu.id("helium_deposit"))
+            .fluid(GTMaterials.Helium::getFluid)
+            .weight(20)
+            .yield(50, 100)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("ad_astra", "moon"))
+            .register();
+
+    public static BedrockFluidDefinition SULFURIC_ACID = BedrockFluidDefinition
+            .builder(GTCEu.id("sulfuric_acid_deposit"))
+            .fluid(GTMaterials.SulfuricAcid::getFluid)
+            .weight(20)
+            .yield(50, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("ad_astra", "venus"))
+            .register();
+
+    public static BedrockFluidDefinition DEUTERIUM = BedrockFluidDefinition
+            .builder(GTCEu.id("deuterium_deposit"))
+            .fluid(GTMaterials.Deuterium::getFluid)
+            .weight(20)
+            .yield(50, 100)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("ad_astra", "mercury"))
+            .register();
+
+    public static BedrockFluidDefinition RADON = BedrockFluidDefinition
+            .builder(GTCEu.id("radon_deposit"))
+            .fluid(GTMaterials.Radon::getFluid)
+            .weight(20)
+            .yield(50, 80)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("ad_astra", "mars"))
+            .register();
+
+    public static BedrockFluidDefinition CERES_RADON = BedrockFluidDefinition
+            .builder(GTCEu.id("ceres_radon_deposit"))
+            .fluid(GTMaterials.Radon::getFluid)
+            .weight(20)
+            .yield(50, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "ceres"))
+            .register();
+
+    public static BedrockFluidDefinition METHANE = BedrockFluidDefinition
+            .builder(GTCEu.id("methane_deposit"))
+            .fluid(GTMaterials.Methane::getFluid)
+            .weight(20)
+            .yield(50, 100)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "titan"))
+            .register();
+
+    public static BedrockFluidDefinition BENZENE = BedrockFluidDefinition
+            .builder(GTCEu.id("benzene_deposit"))
+            .fluid(GTMaterials.Benzene::getFluid)
+            .weight(15)
+            .yield(50, 80)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "titan"))
+            .register();
+
+    public static BedrockFluidDefinition CHARCOAL_BYPRODUCTS = BedrockFluidDefinition
+            .builder(GTCEu.id("charcoal_byproducts"))
+            .fluid(GTMaterials.CharcoalByproducts::getFluid)
+            .weight(10)
+            .yield(50, 60)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "titan"))
+            .register();
+
+    public static BedrockFluidDefinition COAL_GAS = BedrockFluidDefinition
+            .builder(GTCEu.id("coal_gas_deposit"))
+            .fluid(GTMaterials.CoalGas::getFluid)
+            .weight(20)
+            .yield(50, 200)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "io"))
+            .register();
+
+    public static BedrockFluidDefinition NITRIC_ACID = BedrockFluidDefinition
+            .builder(GTCEu.id("nitric_acid_deposit"))
+            .fluid(GTMaterials.NitricAcid::getFluid)
+            .weight(20)
+            .yield(80, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "pluto"))
+            .register();
+
+    public static BedrockFluidDefinition HYDROCHLORIC_ACID = BedrockFluidDefinition
+            .builder(GTCEu.id("hydrochloric_acid_deposit"))
+            .fluid(GTMaterials.HydrochloricAcid::getFluid)
+            .weight(20)
+            .yield(100, 200)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "ganymede"))
+            .register();
+
+    public static BedrockFluidDefinition CERES_XENON = BedrockFluidDefinition
+            .builder(GTCEu.id("ceres_xenon_deposit"))
+            .fluid(GTMaterials.Xenon::getFluid)
+            .weight(20)
+            .yield(50, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "ceres"))
+            .register();
+
+    public static BedrockFluidDefinition CERES_KRYPTON = BedrockFluidDefinition
+            .builder(GTCEu.id("ceres_krypton_deposit"))
+            .fluid(GTMaterials.Krypton::getFluid)
+            .weight(20)
+            .yield(50, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "ceres"))
+            .register();
+
+    public static BedrockFluidDefinition CERES_NEON = BedrockFluidDefinition
+            .builder(GTCEu.id("ceres_neon_deposit"))
+            .fluid(GTMaterials.Neon::getFluid)
+            .weight(20)
+            .yield(50, 150)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "ceres"))
+            .register();
+
+    public static BedrockFluidDefinition FLUORINE = BedrockFluidDefinition
+            .builder(GTCEu.id("fluorine"))
+            .fluid(GTMaterials.Fluorine::getFluid)
+            .weight(10)
+            .yield(80, 120)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "enceladus"))
+            .register();
+
+    public static BedrockFluidDefinition CHLORINE = BedrockFluidDefinition
+            .builder(GTCEu.id("chlorine"))
+            .fluid(GTMaterials.Chlorine::getFluid)
+            .weight(20)
+            .yield(80, 120)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "enceladus"))
+            .register();
+
+    public static BedrockFluidDefinition UNKNOWWATER = BedrockFluidDefinition
+            .builder(GTCEu.id("unknowwater"))
+            .fluid(Objects.requireNonNull(GTMaterials.get("unknowwater"))::getFluid)
+            .weight(20)
+            .yield(40, 60)
+            .depletionAmount(1)
+            .depletionChance(100)
+            .depletedYield(40)
+            .dimensions(getDim("kubejs", "barnarda"))
+            .register();
+
     public static void init() {
         toReRegister.forEach(GTRegistries.BEDROCK_FLUID_DEFINITIONS::registerOrOverride);
+    }
+
+    public static Set<ResourceKey<Level>> getDim(String namespace, String path) {
+        return Set.of(ResourceKey.create(Registries.DIMENSION,
+                new ResourceLocation(namespace, path)));
     }
 
     public static Set<ResourceKey<Level>> nether() {

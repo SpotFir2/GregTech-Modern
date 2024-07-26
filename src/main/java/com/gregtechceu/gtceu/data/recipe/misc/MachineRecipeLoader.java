@@ -858,6 +858,16 @@ public class MachineRecipeLoader {
         ASSEMBLER_RECIPES.recipeBuilder("tungstensteel_crate").EUt(16).inputItems(rodLong, TungstenSteel, 4)
                 .inputItems(plate, TungstenSteel, 4).outputItems(TUNGSTENSTEEL_CRATE).duration(200).circuitMeta(1)
                 .save(provider);
+        ASSEMBLER_RECIPES.recipeBuilder("rhodiumplatedpalladium_crate").EUt(16)
+                .inputItems(rodLong, RhodiumPlatedPalladium, 4)
+                .inputItems(plate, RhodiumPlatedPalladium, 4).outputItems(RHODIUMPLATEDPALLADIUM_CRATE).duration(200)
+                .circuitMeta(1).save(provider);
+        ASSEMBLER_RECIPES.recipeBuilder("naquadahalloy_crate").EUt(16).inputItems(rodLong, NaquadahAlloy, 4)
+                .inputItems(plate, NaquadahAlloy, 4).outputItems(NAQUDAHALLOY_CRATE).duration(200).circuitMeta(1)
+                .save(provider);
+        ASSEMBLER_RECIPES.recipeBuilder("neutronium_crate").EUt(16).inputItems(rodLong, Neutronium, 4)
+                .inputItems(plate, Neutronium, 4).outputItems(NEUTRONIUM_CRATE).duration(200).circuitMeta(1)
+                .save(provider);
 
         ASSEMBLER_RECIPES.recipeBuilder("wood_barrel").EUt(16).inputItems(ItemTags.PLANKS, 4)
                 .inputItems(rodLong, Iron, 2).outputItems(WOODEN_DRUM).duration(200).circuitMeta(2).save(provider);

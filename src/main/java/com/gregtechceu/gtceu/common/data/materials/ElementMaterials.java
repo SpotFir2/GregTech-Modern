@@ -260,7 +260,7 @@ public class ElementMaterials {
                 .element(GTElements.Eu)
                 .cableProperties(GTValues.V[GTValues.UHV], 2, 32)
                 .fluidPipeProperties(7750, 300, true)
-                .blastTemp(6000, GasTier.MID, GTValues.VA[GTValues.IV], 180)
+                .blastTemp(9600, GasTier.MID, GTValues.VA[GTValues.IV], 180)
                 .buildAndRegister();
 
         Fermium = new Material.Builder(GTCEu.id("fermium"))

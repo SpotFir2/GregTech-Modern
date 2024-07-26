@@ -90,7 +90,7 @@ public class SteamSolidBoilerMachine extends SteamBoilerMachine implements IMach
 
     @Override
     protected long getBaseSteamOutput() {
-        return (isHighPressure ? 300 : 120);
+        return (isHighPressure ? 2400 : 960);
     }
 
     @Override

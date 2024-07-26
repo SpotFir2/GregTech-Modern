@@ -19,12 +19,16 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.common.block.FusionCasingBlock;
+import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
+import com.gregtechceu.gtceu.utils.FormattingUtil;
+import com.gregtechceu.gtceu.utils.GTUtil;
 
 import com.lowdragmc.lowdraglib.side.fluid.FluidHelper;
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
@@ -154,10 +158,15 @@ public class FusionReactorMachine extends WorkableElectricMultiblockMachine impl
 
             long heatDiff = recipe.data.getLong("eu_to_start") - fusionReactorMachine.heat;
 
+            int maxParallel = (int) Math.min(16, Math.max(1,
+                    Math.pow(4, GTUtil.getFloorTierByVoltage(fusionReactorMachine.getMaxVoltage()) -
+                            fusionReactorMachine.getTier())));
+            recipe = GTRecipeModifiers.accurateParallel(machine, recipe, maxParallel, false).getFirst();
+
             // if the stored heat is >= required energy, recipe is okay to run
             if (heatDiff <= 0) {
                 return RecipeHelper.applyOverclock(new OverclockingLogic(2, 2), recipe,
-                        fusionReactorMachine.getMaxVoltage());
+                        fusionReactorMachine.getOverclockVoltage() * maxParallel);
             }
             // if the remaining energy needed is more than stored, do not run
             if (fusionReactorMachine.energyContainer.getEnergyStored() < heatDiff)
@@ -169,7 +178,7 @@ public class FusionReactorMachine extends WorkableElectricMultiblockMachine impl
             fusionReactorMachine.heat += heatDiff;
             fusionReactorMachine.updatePreHeatSubscription();
             return RecipeHelper.applyOverclock(new OverclockingLogic(2, 2), recipe,
-                    fusionReactorMachine.getMaxVoltage());
+                    fusionReactorMachine.getOverclockVoltage() * maxParallel);
         }
         return null;
     }
@@ -243,11 +252,6 @@ public class FusionReactorMachine extends WorkableElectricMultiblockMachine impl
         color = -1;
     }
 
-    @Override
-    public long getMaxVoltage() {
-        return Math.min(GTValues.V[tier], super.getMaxVoltage());
-    }
-
     //////////////////////////////////////
     // ******** GUI *********//
     //////////////////////////////////////
@@ -256,6 +260,12 @@ public class FusionReactorMachine extends WorkableElectricMultiblockMachine impl
     public void addDisplayText(List<Component> textList) {
         super.addDisplayText(textList);
         if (isFormed()) {
+            textList.add(Component.translatable("gtceu.multiblock.parallel",
+                    Component.literal(FormattingUtil.formatNumbers(Math.min(16,
+                            Math.max(1,
+                                    Math.pow(4, super.getTier() - getTier())))))
+                            .withStyle(ChatFormatting.DARK_PURPLE))
+                    .withStyle(ChatFormatting.GRAY));
             textList.add(Component.translatable("gtceu.multiblock.fusion_reactor.energy",
                     this.energyContainer.getEnergyStored(), this.energyContainer.getEnergyCapacity()));
             textList.add(Component.translatable("gtceu.multiblock.fusion_reactor.heat", heat));

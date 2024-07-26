@@ -741,6 +741,8 @@ public class GTBlocks {
     public static final BlockEntry<Block> FILTER_CASING = createCleanroomFilter(CleanroomFilterType.FILTER_CASING);
     public static final BlockEntry<Block> FILTER_CASING_STERILE = createCleanroomFilter(
             CleanroomFilterType.FILTER_CASING_STERILE);
+    public static final BlockEntry<Block> FILTER_CASING_LAW = createCleanroomFilter(
+            CleanroomFilterType.FILTER_CASING_LAW);
     public static final BlockEntry<Block> CLEANROOM_GLASS = createGlassCasingBlock("cleanroom_glass",
             GTCEu.id("block/casings/transparent/cleanroom_glass"), () -> RenderType::cutoutMipped);
 
@@ -1010,7 +1012,7 @@ public class GTBlocks {
         return filterBlock;
     }
 
-    protected static BlockEntry<ActiveBlock> createActiveCasing(String name, String baseModelPath) {
+    public static BlockEntry<ActiveBlock> createActiveCasing(String name, String baseModelPath) {
         String finalName = "%s".formatted(name);
         return REGISTRATE.block(finalName, p -> new ActiveBlock(p,
                 Platform.isClient() ? new CTMModelRenderer(GTCEu.id(baseModelPath)) : null,

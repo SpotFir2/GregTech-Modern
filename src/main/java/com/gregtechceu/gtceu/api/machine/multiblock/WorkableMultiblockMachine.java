@@ -14,6 +14,8 @@ import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.data.ContentBuilder;
 
 import com.lowdragmc.lowdraglib.syncdata.ISubscription;
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
@@ -22,6 +24,7 @@ import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
@@ -143,6 +146,7 @@ public abstract class WorkableMultiblockMachine extends MultiblockControllerMach
             }
         }
         // schedule recipe logic
+        machineCallback("onStructureFormed", null, null);
         recipeLogic.updateTickSubscription();
     }
 
@@ -155,6 +159,7 @@ public abstract class WorkableMultiblockMachine extends MultiblockControllerMach
         traitSubscriptions.forEach(ISubscription::unsubscribe);
         traitSubscriptions.clear();
         // reset recipe Logic
+        machineCallback("onStructureInvalid", null, null);
         recipeLogic.resetRecipeLogic();
     }
 
@@ -284,5 +289,27 @@ public abstract class WorkableMultiblockMachine extends MultiblockControllerMach
     @NotNull
     public GTRecipeType getRecipeType() {
         return recipeTypes[activeRecipeType];
+    }
+
+    public GTRecipe.ActionResult input(boolean simulate, Map<RecipeCapability<?>, List<Content>> contents) {
+        GTRecipe tmp = new GTRecipe(new GTRecipeType(new ResourceLocation("gt_machine_io"), "gt"),
+                new ResourceLocation("___recipe_test_ids__"), contents, null, null,
+                null, null, List.of(), null, 0, false);
+        if (simulate) return tmp.matchRecipeContents(IO.IN, this, contents);
+        else return tmp.handleRecipe(IO.IN, this, contents) ? GTRecipe.ActionResult.SUCCESS :
+                GTRecipe.ActionResult.FAIL_NO_REASON;
+    }
+
+    public GTRecipe.ActionResult output(boolean simulate, Map<RecipeCapability<?>, List<Content>> contents) {
+        GTRecipe tmp = new GTRecipe(new GTRecipeType(new ResourceLocation("gt_machine_io"), "gt"),
+                new ResourceLocation("___recipe_test_ids__"), null, contents, null,
+                null, null, List.of(), null, 0, false);
+        if (simulate) return tmp.matchRecipeContents(IO.OUT, this, contents);
+        else return tmp.handleRecipe(IO.OUT, this, contents) ? GTRecipe.ActionResult.SUCCESS :
+                GTRecipe.ActionResult.FAIL_NO_REASON;
+    }
+
+    public ContentBuilder getContentBuilder() {
+        return new ContentBuilder();
     }
 }

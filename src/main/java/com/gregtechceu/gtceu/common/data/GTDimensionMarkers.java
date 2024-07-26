@@ -34,11 +34,37 @@ public class GTDimensionMarkers {
     public static final BlockEntry<Block> END_MARKER = createMarker("the_end");
 
     public static final DimensionMarker OVERWORLD = createAndRegister(Level.OVERWORLD.location(), 0,
-            () -> OVERWORLD_MARKER, null);
-    public static final DimensionMarker NETHER = createAndRegister(Level.NETHER.location(), 0,
-            () -> NETHER_MARKER, null);
-    public static final DimensionMarker END = createAndRegister(Level.END.location(), 0,
-            () -> END_MARKER, null);
+            () -> OVERWORLD_MARKER, "block.gtceu.overworld_marker");
+    public static final DimensionMarker NETHER = createAndRegister(Level.NETHER.location(), 3,
+            () -> NETHER_MARKER, "block.gtceu.the_nether_marker");
+    public static final DimensionMarker END = createAndRegister(Level.END.location(), 6,
+            () -> END_MARKER, "block.gtceu.the_end_marker");
+    public static final DimensionMarker MOON = createAndRegister(new ResourceLocation("ad_astra:moon"),
+            1, new ResourceLocation("ad_astra:moon_stone"), "dimension.ad_astra:moon");
+    public static final DimensionMarker MARS = createAndRegister(new ResourceLocation("ad_astra:mars"),
+            2, new ResourceLocation("ad_astra:mars_stone"), "dimension.ad_astra:mars");
+    public static final DimensionMarker VENUS = createAndRegister(new ResourceLocation("ad_astra:venus"),
+            3, new ResourceLocation("ad_astra:venus_stone"), "dimension.ad_astra:venus");
+    public static final DimensionMarker MERCURY = createAndRegister(new ResourceLocation("ad_astra:mercury"),
+            3, new ResourceLocation("ad_astra:mercury_stone"), "dimension.ad_astra:mercury");
+    public static final DimensionMarker GLACIO = createAndRegister(new ResourceLocation("ad_astra:glacio"),
+            7, new ResourceLocation("ad_astra:glacio_stone"), "dimension.ad_astra:glacio");
+    public static final DimensionMarker ANCIENT_WORLD = createAndRegister(new ResourceLocation("kubejs:ancient_world"),
+            0, new ResourceLocation("kubejs:reactor_core"), "dimension.kubejs:ancient_world");
+    public static final DimensionMarker titan = createAndRegister(new ResourceLocation("kubejs:titan"),
+            6, new ResourceLocation("kubejs:titanstone"), "dimension.kubejs:titan");
+    public static final DimensionMarker pluto = createAndRegister(new ResourceLocation("kubejs:pluto"),
+            6, new ResourceLocation("kubejs:plutostone"), "dimension.kubejs:pluto");
+    public static final DimensionMarker io = createAndRegister(new ResourceLocation("kubejs:io"),
+            5, new ResourceLocation("kubejs:iostone"), "dimension.kubejs:io");
+    public static final DimensionMarker ganymede = createAndRegister(new ResourceLocation("kubejs:ganymede"),
+            5, new ResourceLocation("kubejs:ganymedestone"), "dimension.kubejs:ganymede");
+    public static final DimensionMarker enceladus = createAndRegister(new ResourceLocation("kubejs:enceladus"),
+            6, new ResourceLocation("kubejs:enceladusstone"), "dimension.kubejs:enceladus");
+    public static final DimensionMarker ceres = createAndRegister(new ResourceLocation("kubejs:ceres"),
+            4, new ResourceLocation("kubejs:ceresstone"), "dimension.kubejs:ceres");
+    public static final DimensionMarker barnarda = createAndRegister(new ResourceLocation("kubejs:barnarda"),
+            8, new ResourceLocation("kubejs:barnarda_wood"), "dimension.kubejs:barnarda");
 
     public static DimensionMarker createAndRegister(ResourceLocation dim, int tier, ResourceLocation itemKey,
                                                     @Nullable String overrideName) {

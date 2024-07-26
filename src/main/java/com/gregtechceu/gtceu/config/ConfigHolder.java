@@ -173,10 +173,6 @@ public class ConfigHolder {
             public boolean nativeEUToPlatformNative = true;
 
             @Configurable
-            @Configurable.Comment({ "Enable GTEU to Platform native (and vice versa) Converters.", "Default: false" })
-            public boolean enablePlatformConverters = false;
-
-            @Configurable
             @Configurable.Comment({ "Platform native Energy to GTEU ratio for converting FE to EU.",
                     "Only affects converters.", "Default: 4 FE/Energy == 1 EU" })
             @Configurable.Range(min = 1, max = 16)
@@ -326,13 +322,6 @@ public class ConfigHolder {
         @Configurable
         @Configurable.Comment({ "Whether Steam Multiblocks should use Steel instead of Bronze.", "Default: false" })
         public boolean steelSteamMultiblocks = false;
-        @Configurable
-        @Configurable.Comment({ "Whether to enable the cleanroom, required for various recipes.", "Default: true" })
-        public boolean enableCleanroom = true;
-        @Configurable
-        @Configurable.Comment({ "Whether multiblocks should ignore all cleanroom requirements.",
-                "This does nothing if enableCleanroom is false.", "Default: false" })
-        public boolean cleanMultiblocks = false;
         @Configurable
         @Configurable.Comment({ "Block to replace mined ores with in the miner and multiblock miner.",
                 "Default: minecraft:cobblestone" })
@@ -503,6 +492,8 @@ public class ConfigHolder {
         @Configurable.Comment({ "Whether the GTCEu's ingame guidebook, 'Compass', be enabled.", "WARNING: INCOMPLETE",
                 "Default: false" })
         public boolean enableCompass = false;
+        @Configurable
+        public boolean disableDrift = true;
     }
 
     public static class ClientConfigs {
