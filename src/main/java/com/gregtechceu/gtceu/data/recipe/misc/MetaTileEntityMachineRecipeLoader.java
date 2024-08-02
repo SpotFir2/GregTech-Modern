@@ -818,7 +818,7 @@ public class MetaTileEntityMachineRecipeLoader {
                 .circuitMeta(2)
                 .outputItems(FLUID_DRILLING_RIG[EV])
                 .duration(400).EUt(VA[LuV]).save(provider);
-        
+
         ASSEMBLER_RECIPES.recipeBuilder("uv_fluid_drilling_rig")
                 .inputItems(HULL[UHV])
                 .inputItems(frameGt, TungstenSteel, 4)

@@ -131,7 +131,7 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
         if (tier == GTValues.EV)
             return 64;
         if (tier == GTValues.UV)
-            return 1024;    //1024=64*2*2*2*2
+            return 1024;    // 1024=64*2*2*2*2
         return 1;
     }
 

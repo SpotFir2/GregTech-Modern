@@ -1917,7 +1917,8 @@ public class GTMachines {
                     .tooltips(
                             Component.translatable("gtceu.machine.fluid_drilling_rig.description"),
                             Component.translatable("gtceu.machine.fluid_drilling_rig.depletion",
-                                    FormattingUtil.formatNumbers(FluidDrillMachine.getDepletionChanceFormatted(FluidDrillMachine.getDepletionChance(tier)))),
+                                    FormattingUtil.formatNumbers(FluidDrillMachine
+                                            .getDepletionChanceFormatted(FluidDrillMachine.getDepletionChance(tier)))),
                             Component.translatable("gtceu.universal.tooltip.energy_tier_range", GTValues.VNF[tier],
                                     GTValues.VNF[tier + 1]),
                             Component.translatable("gtceu.machine.fluid_drilling_rig.production",
