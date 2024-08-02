@@ -1917,7 +1917,7 @@ public class GTMachines {
                     .tooltips(
                             Component.translatable("gtceu.machine.fluid_drilling_rig.description"),
                             Component.translatable("gtceu.machine.fluid_drilling_rig.depletion",
-                                    FormattingUtil.formatNumbers(100.0 / FluidDrillMachine.getDepletionChance(tier))),
+                                    FormattingUtil.formatNumbers(FluidDrillMachine.getDepletionChanceFormatted(FluidDrillMachine.getDepletionChance(tier)))),
                             Component.translatable("gtceu.universal.tooltip.energy_tier_range", GTValues.VNF[tier],
                                     GTValues.VNF[tier + 1]),
                             Component.translatable("gtceu.machine.fluid_drilling_rig.production",
@@ -1942,7 +1942,7 @@ public class GTMachines {
                     .compassSections(GTCompassSections.TIER[MV])
                     .compassNode("fluid_drilling_rig")
                     .register(),
-            MV, HV, EV);
+            MV, HV, EV, UV);
 
     public static final MultiblockMachineDefinition[] LARGE_MINER = registerTieredMultis("large_miner",
             (holder, tier) -> new LargeMinerMachine(holder, tier, 64 / tier, 2 * tier - 5, tier, 8 - (tier - 5)),

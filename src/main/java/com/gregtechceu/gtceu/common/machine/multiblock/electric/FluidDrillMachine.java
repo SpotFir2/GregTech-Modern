@@ -114,7 +114,13 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
             return 2;
         if (tier == GTValues.EV)
             return 8;
+        if (tier == GTValues.UV)
+            return 0;
         return 1;
+    }
+
+    public static double getDepletionChanceFormatted(int chance) {
+        return chance == 0 ? 0 : 100.0 / chance;
     }
 
     public static int getRigMultiplier(int tier) {
@@ -124,6 +130,8 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
             return 16;
         if (tier == GTValues.EV)
             return 64;
+        if (tier == GTValues.UV)
+            return 1024;    //1024=64*2*2*2*2
         return 1;
     }
 
@@ -133,6 +141,8 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
         if (tier == GTValues.HV)
             return GTBlocks.CASING_TITANIUM_STABLE.get();
         if (tier == GTValues.EV)
+            return GTBlocks.CASING_TUNGSTENSTEEL_ROBUST.get();
+        if (tier == GTValues.UV)
             return GTBlocks.CASING_TUNGSTENSTEEL_ROBUST.get();
         return GTBlocks.CASING_STEEL_SOLID.get();
     }
@@ -145,6 +155,8 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
             return GTBlocks.MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.Titanium).get();
         if (tier == GTValues.EV)
             return GTBlocks.MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.TungstenSteel).get();
+        if (tier == GTValues.UV)
+            return GTBlocks.MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.TungstenSteel).get();
         return GTBlocks.MATERIAL_BLOCKS.get(TagPrefix.frameGt, GTMaterials.Steel).get();
     }
 
@@ -154,6 +166,8 @@ public class FluidDrillMachine extends WorkableElectricMultiblockMachine impleme
         if (tier == GTValues.HV)
             return GTCEu.id("block/casings/solid/machine_casing_stable_titanium");
         if (tier == GTValues.EV)
+            return GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel");
+        if (tier == GTValues.UV)
             return GTCEu.id("block/casings/solid/machine_casing_robust_tungstensteel");
         return GTCEu.id("block/casings/solid/machine_casing_solid_steel");
     }

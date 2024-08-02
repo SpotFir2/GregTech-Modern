@@ -139,7 +139,8 @@ public class FluidDrillLogic extends RecipeLogic {
             int chance = FluidDrillMachine.getDepletionChance(getMachine().getTier());
             var data = BedrockFluidVeinSavedData.getOrCreate(serverLevel);
             // chance to deplete based on the rig
-            if (chance == 1 || GTValues.RNG.nextInt(chance) == 0) {
+            // chance==0 means not deplete
+            if (chance!=0 && (chance == 1 || GTValues.RNG.nextInt(chance) == 0)) {
                 data.depleteVein(getChunkX(), getChunkZ(), 0, false);
             }
         }

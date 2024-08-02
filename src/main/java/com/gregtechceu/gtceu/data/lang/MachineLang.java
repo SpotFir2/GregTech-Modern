@@ -632,6 +632,7 @@ public class MachineLang {
         provider.add("gtceu.machine.mv_fluid_drilling_rig.tooltip", "Oil Extraction Pump");
         provider.add("gtceu.machine.hv_fluid_drilling_rig.tooltip", "Does not perform Fracking");
         provider.add("gtceu.machine.ev_fluid_drilling_rig.tooltip", "Well Drainer");
+        provider.add("gtceu.machine.uv_fluid_drilling_rig.tooltip", "Not even Consuming");
         provider.add("gtceu.machine.cleanroom.tooltip", "Keeping those pesky particles out");
         provider.add("gtceu.machine.charcoal_pile.tooltip", "Underground fuel bakery");
 
