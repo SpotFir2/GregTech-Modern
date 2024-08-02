@@ -819,18 +819,18 @@ public class MetaTileEntityMachineRecipeLoader {
                 .outputItems(FLUID_DRILLING_RIG[EV])
                 .duration(400).EUt(VA[LuV]).save(provider);
 
-                /*
-                 * ASSEMBLER_RECIPES.recipeBuilder("uv_fluid_drilling_rig")
-                 * .inputItems(HULL[UHV])
-                 * .inputItems(frameGt, TungstenSteel, 4)
-                 * .inputItems(CustomTags.UHV_CIRCUITS, 4)
-                 * .inputItems(ELECTRIC_MOTOR_UHV, 4)
-                 * .inputItems(ELECTRIC_PUMP_UHV, 4)
-                 * .inputItems(gear, Neutronium, 4)
-                 * .circuitMeta(2)
-                 * .outputItems(FLUID_DRILLING_RIG[UV])
-                 * .duration(400).EUt(VA[UHV]).save(provider);
-                 */
+        /*
+         * ASSEMBLER_RECIPES.recipeBuilder("uv_fluid_drilling_rig")
+         * .inputItems(HULL[UHV])
+         * .inputItems(frameGt, TungstenSteel, 4)
+         * .inputItems(CustomTags.UHV_CIRCUITS, 4)
+         * .inputItems(ELECTRIC_MOTOR_UHV, 4)
+         * .inputItems(ELECTRIC_PUMP_UHV, 4)
+         * .inputItems(gear, Neutronium, 4)
+         * .circuitMeta(2)
+         * .outputItems(FLUID_DRILLING_RIG[UV])
+         * .duration(400).EUt(VA[UHV]).save(provider);
+         */
 
         // Long Distance Pipes
         ASSEMBLER_RECIPES.recipeBuilder("long_distance_item_endpoint")
